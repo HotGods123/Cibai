@@ -4,28 +4,39 @@ import java.util.*;
 public class FileArray 
 {
 
-	public static void writeArray(String fn, int[] c) throws FileNotFoundException 
+	public static void writeArray(String fn, int[] c)
 	{
-		PrintWriter write = new PrintWriter(fn); 
+		PrintWriter write;
+		try {
+			write = new PrintWriter(fn);
+			
+			for(int num : c)
+				write.println(num);   
 
-		for(int num : c)
-			write.println(num);   
-
-		write.close(); 
+			write.close(); 
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} 
 	}
 
-	public void readArray(String fn, int[] c) throws FileNotFoundException
+	public void readArray(String fn, int[] c)
 	{
 		File file = new File(fn);
-		Scanner scan = new Scanner(file);
-		int i = 0;
-		
-		while(scan.hasNext()) {
-			c[i] = Integer.parseInt(scan.next());
-			i++;
+		Scanner scan;
+		try {
+			scan = new Scanner(file);
+			
+			int i = 0;
+			
+			while(scan.hasNext()) {
+				c[i] = Integer.parseInt(scan.next());
+				i++;
+			}
+			
+			scan.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		}
-		
-		scan.close();
 	}
 
 	public static void main(String[] args) throws IOException
